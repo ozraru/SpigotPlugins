@@ -1,0 +1,140 @@
+package work.raru.spigot.user_switcher;
+
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import ru.tehkode.permissions.PermissionGroup;
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.PermissionUser;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
+
+public class Main extends JavaPlugin {
+	@Override
+	public void onEnable() {
+		System.out.println("プラグインが有効になりました");
+		File file = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata");
+		System.out.println(file.toString());
+	}
+	
+	@Override
+	public void onDisable() {
+		System.out.println("プラグインが無効になりました");
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (command.getName().equalsIgnoreCase("login")) {
+			sender.sendMessage("login.");
+			
+			if (args.length != 2) {
+				return false;
+			}
+			
+			PermissionManager PermissionManager = PermissionsEx.getPermissionManager();
+			PermissionGroup LoginGroup = PermissionManager.getGroup(args[1]);
+
+			if (Bukkit.getPlayer(args[0]) == null) {
+				sender.sendMessage("Not found user");
+				return false;
+			} else if (LoginGroup.isVirtual()) {
+				sender.sendMessage("Not found group");
+				return false;
+			} else if (LoginGroup.getOption("Account") != null && LoginGroup.getOption("Account").equals("true")) {
+				PermissionUser User = PermissionsEx.getUser(args[0]);
+				@SuppressWarnings("deprecation")
+				PermissionGroup[] Groups = User.getGroups();
+				File BeforeData;
+				for (PermissionGroup permissionGroup : Groups) {
+					if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
+						BeforeData = new File("accountdata/"+permissionGroup.getName()+".dat");
+						sender.sendMessage(BeforeData.getAbsolutePath());
+					}
+					User.removeGroup(permissionGroup);
+				}
+				User.addGroup(LoginGroup);
+				File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
+				File AfterData = new File("accountdata/"+LoginGroup.getName()+".dat");
+				sender.sendMessage(PlayerData.getAbsolutePath());
+				sender.sendMessage(AfterData.getAbsolutePath());
+				return true;
+			} else {
+				sender.sendMessage(LoginGroup.getOption("Account"));
+				sender.sendMessage("true");
+				sender.sendMessage("Group is not account");
+				return false;
+			}
+			
+//			NBTEntity nbtent = new NBTEntity(Bukkit.getPlayer(sender.getName())); //Only for vanilla tags!
+//			System.out.println(nbtent.getType("Fire"));
+//			nbtent.setShort("Fire",(short) 20);
+//			System.out.println(nbtent.getType("Health"));
+//			nbtent.setFloat("Health", (float) 13);
+//
+//			NBTCompound abilities = nbtent.getCompound("abilities");
+//			System.out.println(abilities.toString());
+//			System.out.println(abilities.getType("walkSpeed"));
+//			abilities.setFloat("walkSpeed", (float) (0.1));
+//			System.out.println(nbtent.getType("UUIDMost"));
+//			nbtent.setLong("UUIDMost", 6616097429873771964l);
+//			System.out.println(nbtent.getType("UUIDLeast"));
+//			nbtent.setLong("UUIDLeast", -6363619086350090121l);
+//			System.out.println(nbtent.getCompound("abilities"));
+//			System.out.println(nbtent.toString());
+			
+//			nbtent.setObject("abilities", );
+//			NBTEditor.setEntityTag((Entity) sender, 20, "Fire");
+//			int[] Pos = {10,80,10};
+//			NBTEditor.setEntityTag((Entity) sender, Pos, "Pos");
+//			return true;
+//			try {
+//				net.minecraft.server.v1_12_R1.Entity nmsEntity = ((CraftEntity) sender).getHandle();
+//
+//				NBTTagCompound tag = new NBTTagCompound();
+//
+//				int[] Pos = { 10, 80, 10 };
+//				tag.setIntArray("Pos", Pos);
+//				tag.setInt("Fire", 20);
+//				nbti.
+//
+//				nmsEntity.c(tag);
+//
+//				EntityLiving el = (EntityLiving) nmsEntity;
+//				el.a(tag);
+//				return true;
+//			} catch (Exception exception) {
+//				exception.printStackTrace();
+//			}
+		}
+		if (command.getName().equalsIgnoreCase("get_uuid")) {
+			if (args.length > 0) {
+				if (Bukkit.getServer().getPlayer(args[0]) != null) {
+					sender.sendMessage(args[0]+"'s UUID is "+Bukkit.getServer().getPlayer(args[0]).getUniqueId().toString());
+					return true;
+				} else {
+					sender.sendMessage("User not found");
+					return true;
+				}
+			} else if (Bukkit.getPlayer(sender.getName()) != null){
+				sender.sendMessage("Your UUID is "+sender.getServer().getPlayer(sender.getName()).getUniqueId().toString());
+				return true;
+			} else {
+				return false;
+			}
+		}
+		if (command.getName().equalsIgnoreCase("logout")) {
+			sender.sendMessage("logout");
+			PermissionUser User = PermissionsEx.getUser(args[0]);
+			@SuppressWarnings("deprecation")
+			PermissionGroup[] Groups = User.getGroups();
+			for (PermissionGroup permissionGroup : Groups) {
+				User.removeGroup(permissionGroup);
+			}
+			return true;
+		}
+		return false;
+	}
+}

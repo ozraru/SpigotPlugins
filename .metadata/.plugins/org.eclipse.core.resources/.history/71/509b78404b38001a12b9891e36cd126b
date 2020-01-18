@@ -1,0 +1,100 @@
+package work.raru.spigot.ability_changer;
+
+import java.util.logging.Logger;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main extends JavaPlugin {
+	Logger logger = getLogger();
+	@Override
+	public void onEnable() {
+		logger.info("Enabled");
+	}
+	
+	@Override
+	public void onDisable() {
+		logger.info("Disabled");
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (command.getName().equalsIgnoreCase("fly")) {
+			Player player;
+			if (args.length >= 1) {
+				player = Bukkit.getPlayer(args[0]);
+			} else {
+				player = (Player) sender;
+			}
+			if (player == null) {
+				return false;
+			}
+			if (player.getAllowFlight()) {
+				player.setAllowFlight(false);
+				sender.sendMessage(player.getName()+" can't fly.");
+				player.sendMessage("You can't fly.");
+				return true;
+			} else {
+				player.setAllowFlight(true);
+				sender.sendMessage(player.getName()+" can fly!");
+				player.sendMessage("You can fly!");
+				return true;
+			}
+		}
+//		if (command.getName().equalsIgnoreCase("compass")) {
+//			Player player;
+//			if (args.length == 2) {
+//				player = Bukkit.getPlayer(args[0]);
+//			} else {
+//				player = (Player) sender;
+//			}
+//			if (player == null) {
+//				return false;
+//			}
+//			double x,z;
+//			if (args.length == 2) {
+//				try {
+//				   x = Integer.parseInt(args[0]);
+//				} catch (NumberFormatException e) {
+//				   return false;
+//				}
+//				try {
+//				   z = Integer.parseInt(args[1]);
+//				} catch (NumberFormatException e) {
+//				   return false;
+//				}
+//			} else if (args.length == 3) {
+//				try {
+//				   x = Integer.parseInt(args[1]);
+//				} catch (NumberFormatException e) {
+//				   return false;
+//				}
+//				try {
+//				   z = Integer.parseInt(args[2]);
+//				} catch (NumberFormatException e) {
+//				   return false;
+//				}
+//			} else {
+//				return false;
+//			}
+//			Location loc = new Location(player.getWorld(), x, 0, z);
+//		}
+		if (command.getName().equalsIgnoreCase("fly")) {
+			Player player;
+			if (args.length >= 1) {
+				player = Bukkit.getPlayer(args[0]);
+			} else {
+				player = (Player) sender;
+			}
+			if (player == null) {
+				return false;
+			}
+		}
+		
+		return false;
+	}
+}

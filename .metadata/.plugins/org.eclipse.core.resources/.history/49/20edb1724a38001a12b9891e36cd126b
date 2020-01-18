@@ -1,0 +1,42 @@
+name: AbilityChanger
+main: work.raru.spigot.ability_changer.Main
+version: 0.1
+author: ozraru
+description: Add ability change commands.
+commands:
+  fly:
+    description: Enable fly
+    aliases: [fly_on]
+    permission: ability_changer.fly
+    usage: |
+      /fly [player]
+      Example: /fly - Toggle fly you.
+      Example: /fly ozraru - Toggle fly ozraru.
+  logout:
+    description: Logout. And reset your UUID.
+    aliases: [log_out, signout, sign_out]
+    permission: ability_changer.logout
+    usage: |
+      /command
+      Example: /command - Logout. And reset.
+  get_uuid:
+    description: Get your UUID.
+    aliases: [uuid,getuuid]
+    permission: ability_changer.logout
+    usage: |
+      /command [player]
+      Example: /get_uuid - Get your UUID.
+      Example: /get_uuid ozraru - Get ozraru's UUID.
+permissions:
+  ability_changer.*:
+    description: Gives access to all switch user commands
+    children:
+      ability_changer.fly: true
+      ability_changer.logout: true
+  ability_changer.fly:
+    description: Allows you login
+    default: op
+  ability_changer.logout:
+    description: Allows you logout
+    default: op
+  

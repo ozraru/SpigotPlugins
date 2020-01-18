@@ -1,0 +1,166 @@
+package work.raru.spigot.user_switcher;
+
+import java.io.File;
+import java.util.logging.Logger;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import ru.tehkode.permissions.PermissionGroup;
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.PermissionUser;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
+
+public class Main extends JavaPlugin {
+	Logger logger = getLogger();
+	@Override
+	public void onEnable() {
+		logger.info("Enabled");
+	}
+	
+	@Override
+	public void onDisable() {
+		logger.info("Disabled");
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (command.getName().equalsIgnoreCase("login")) {
+			sender.sendMessage("login.");
+			
+			if (args.length != 2) {
+				return false;
+			}
+			
+			PermissionManager PermissionManager = PermissionsEx.getPermissionManager();
+			PermissionGroup LoginGroup = PermissionManager.getGroup(args[1]);
+
+			if (Bukkit.getPlayer(args[0]) == null) {
+				sender.sendMessage("Not found user");
+				return false;
+			} else if (LoginGroup.isVirtual()) {
+				sender.sendMessage("Not found group");
+				return false;
+			} else if (LoginGroup.getOption("Account") != null && LoginGroup.getOption("Account").equals("true")) {
+				PermissionUser User = PermissionsEx.getUser(args[0]);
+				@SuppressWarnings("deprecation")
+				PermissionGroup[] Groups = User.getGroups();
+				File BeforeData = null;
+				for (PermissionGroup permissionGroup : Groups) {
+					if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
+						BeforeData = new File("accountdata/"+permissionGroup.getName()+".dat");
+						sender.sendMessage(BeforeData.getAbsolutePath());
+					}
+					User.removeGroup(permissionGroup);
+				}
+				User.addGroup(LoginGroup);
+				File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
+				File AfterData = new File("accountdata/"+LoginGroup.getName()+".dat");
+				sender.sendMessage(PlayerData.getAbsolutePath());
+				sender.sendMessage(AfterData.getAbsolutePath());
+				Bukkit.getPlayer(args[0]).kickPlayer("Logging in. Please reconnect.");
+				if (BeforeData == null) {
+					sender.sendMessage("Not found before account");
+					BeforeData = new File("accountdata/Before-bak.dat");
+				}
+				if (PlayerData.renameTo(BeforeData)) {
+					sender.sendMessage("logout sucsess!");
+				} else {
+					sender.sendMessage("logout failed!");
+					return false;
+				}
+				if (AfterData.renameTo(PlayerData)) {
+					sender.sendMessage("login sucsess!");
+					return true;
+				} else {
+					sender.sendMessage("login failed!");
+					return false;
+				}
+			} else {
+				sender.sendMessage(LoginGroup.getOption("Account"));
+				sender.sendMessage("true");
+				sender.sendMessage("Group is not account");
+				return false;
+			}
+		}
+		if (command.getName().equalsIgnoreCase("get_uuid")) {
+			if (args.length > 0) {
+				if (Bukkit.getServer().getPlayer(args[0]) != null) {
+					sender.sendMessage(args[0]+"'s UUID is "+Bukkit.getServer().getPlayer(args[0]).getUniqueId().toString());
+					return true;
+				} else {
+					sender.sendMessage("User not found");
+					return true;
+				}
+			} else if (Bukkit.getPlayer(sender.getName()) != null){
+				sender.sendMessage("Your UUID is "+sender.getServer().getPlayer(sender.getName()).getUniqueId().toString());
+				return true;
+			} else {
+				return false;
+			}
+		}
+		if (command.getName().equalsIgnoreCase("logout")) {
+			sender.sendMessage("logout");
+			if (args.length != 1) {
+				return false;
+			}
+			PermissionUser User = PermissionsEx.getUser(args[0]);
+			if (User == null) {
+				return false;
+			}
+			@SuppressWarnings("deprecation")
+			PermissionGroup[] Groups = User.getGroups();
+			File BeforeData = null;
+			for (PermissionGroup permissionGroup : Groups) {
+				if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
+					BeforeData  = new File("accountdata/"+permissionGroup.getName()+".dat");
+					sender.sendMessage(BeforeData.getAbsolutePath());
+				}
+				User.removeGroup(permissionGroup);
+			}
+			if (BeforeData == null) {
+				sender.sendMessage("Not found before account");
+				return false;
+			}
+			File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
+			if (PlayerData.renameTo(BeforeData)) {
+				sender.sendMessage("logout sucsess!");
+			} else {
+				sender.sendMessage("logout failed!");
+				return false;
+			}
+			Bukkit.getPlayer(args[0]).kickPlayer("Logging out. Please reconnect.");
+			return true;
+		}
+		if (command.getName().equalsIgnoreCase("signup")) {
+			sender.sendMessage("logout");
+			PermissionUser User = PermissionsEx.getUser(args[0]);
+			@SuppressWarnings("deprecation")
+			PermissionGroup[] Groups = User.getGroups();
+			File BeforeData = null;
+			for (PermissionGroup permissionGroup : Groups) {
+				if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
+					BeforeData  = new File("accountdata/"+permissionGroup.getName()+".dat");
+					sender.sendMessage(BeforeData.getAbsolutePath());
+				}
+				User.removeGroup(permissionGroup);
+			}
+			if (BeforeData == null) {
+				sender.sendMessage("Not found before account");
+				return false;
+			}
+			File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
+			if (PlayerData.renameTo(BeforeData)) {
+				sender.sendMessage("logout sucsess!");
+			} else {
+				sender.sendMessage("logout failed!");
+				return false;
+			}
+			Bukkit.getPlayer(args[0]).kickPlayer("Logging out. Please reconnect.");
+			return true;
+		}
+		return false;
+	}
+}

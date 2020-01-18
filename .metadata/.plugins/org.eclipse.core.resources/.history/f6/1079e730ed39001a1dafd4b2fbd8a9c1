@@ -1,0 +1,56 @@
+name: UserSwitcher
+main: work.raru.spigot.user_switcher.Main
+version: 0.2
+author: ozraru
+description: User Switcher
+commands:
+  signup:
+    description: Signup. So, create account. 
+    aliases: [sign_up, signup, sign_up]
+    permission: user_switcher.signup
+    usage: |
+      /signin <minecraft_id> <account>
+      Example: /signup raru_sub raru - raru_sub login to raru.
+  login:
+    description: Login. So set account.
+    aliases: [log_in, signin, sign_in]
+    permission: user_switcher.login
+    usage: |
+      /login <minecraft_id> <account>
+      Example: /login raru_sub raru - raru_sub login to raru.
+  logout:
+    description: Logout. So, delete any permission.
+    aliases: [log_out, signout, sign_out]
+    permission: user_switcher.logout
+    usage: |
+      /logout <minecraft_id>
+      Example: /logout - raru_sub logout.
+  getuuid:
+    description: Get your UUID.
+    aliases: [uuid]
+    permission: user_switcher.logout
+    usage: |
+      /getuuid [player]
+      Example: /getuuid - Get your UUID.
+      Example: /getuuid ozraru - Get ozraru's UUID.
+permissions:
+  user_switcher.*:
+    description: Gives access to all switch user commands
+    children:
+      user_switcher.signup: true
+      user_switcher.login: true
+      user_switcher.logout: true
+      user_switcher.getuuid: true
+  user_switcher.signup:
+    description: Allows signup
+    default: op
+  user_switcher.login:
+    description: Allows login
+    default: op
+  user_switcher.logout:
+    description: Allows logout
+    default: op
+  user_switcher.getuuid:
+    description: Allows check UUID
+    default: true
+  

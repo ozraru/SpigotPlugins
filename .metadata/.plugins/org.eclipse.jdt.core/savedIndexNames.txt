@@ -1,0 +1,8 @@
+INDEX VERSION 1.131+/home/ozraru/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.core
+193110485.index
+2760378869.index
+1200954446.index
+3511096280.index
+3520979963.index
+3187413135.index
+1900980386.index

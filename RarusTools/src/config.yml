@@ -1,0 +1,22 @@
+Inventorys:
+  Items:
+    Workbench:
+      name: Portable Crafting Table
+      lore:
+        - このアイテムを持った状態で
+        - /rt i c
+        - を実行すると、どこでも3x3のクラフト画面を表示できます
+        - ただし、Citizen以上の権限がある国に限る
+      ench: SILK_TOUCH
+      enchLevel: '100'
+      hideench: true
+    EnderChest:
+      name: Portable Ender Chest
+      lore:
+        - このアイテムを持った状態で
+        - /rt i e
+        - を実行すると、どこでも自分のエンダーチェストを表示できます
+        - ただし、Citizen以上の権限がある国に限る
+      ench: SILK_TOUCH
+      enchLevel: '100'
+      hideench: true

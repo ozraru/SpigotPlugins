@@ -27,4 +27,12 @@
 <fullyQualifiedTypeName name="org.bukkit.entity.Player"/>
 <fullyQualifiedTypeName name="org.bukkit.Location"/>
 <fullyQualifiedTypeName name="org.bukkit.permissions.Permission"/>
+<fullyQualifiedTypeName name="net.milkbowl.vault.Vault"/>
+<fullyQualifiedTypeName name="net.milkbowl.vault.economy.EconomyResponse"/>
+<fullyQualifiedTypeName name="javax.activation.DataHandler"/>
+<fullyQualifiedTypeName name="net.milkbowl.vault.economy.Economy"/>
+<fullyQualifiedTypeName name="org.bukkit.plugin.Plugin"/>
+<fullyQualifiedTypeName name="jp.jyn.jecon.Jecon"/>
+<fullyQualifiedTypeName name="net.milkbowl.vault.Vault.VaultListener"/>
+<fullyQualifiedTypeName name="org.bukkit.plugin.RegisteredServiceProvider"/>
 </qualifiedTypeNameHistroy>

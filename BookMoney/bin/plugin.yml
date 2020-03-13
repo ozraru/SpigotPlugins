@@ -1,42 +1,48 @@
-name: AbilityChanger
-main: work.raru.spigot.ability_changer.Main
+name: BookMoney
+main: work.raru.spigot.book_money.Main
 version: 0.1
 author: ozraru
-description: Add ability change commands.
+description: Convert bitween book and dollars.
+depend: [Vault]
 commands:
-  fly:
-    description: Enable fly
-    aliases: [fly_on]
-    permission: ability_changer.fly
+  bm:
+    description: BookMoney Command
+    aliases: [bookmoney]
     usage: |
-      /fly [player]
-      Example: /fly - Toggle fly you.
-      Example: /fly ozraru - Toggle fly ozraru.
-  logout:
-    description: Logout. And reset your UUID.
-    aliases: [log_out, signout, sign_out]
-    permission: ability_changer.logout
+      /bm create <amount>
+      /bmc <amount>
+      Example: /bm create 100 - Get a 100 dollars book, and pay 100 dollars.
+      Example: /bmc 1000 - Get 10000 dollars book, and pay 10000 dollars.
+      /bm use
+      /bmu
+      You must have MoneyBook in Mainhand
+      Example: /bm use - If you have 100 dollars book in mainhand, you get 100 dollars.
+  bmc:
+    description: MoneyBook create Command
+    aliases: [bm create,bookmoney create]
     usage: |
-      /command
-      Example: /command - Logout. And reset.
-  get_uuid:
-    description: Get your UUID.
-    aliases: [uuid,getuuid]
-    permission: ability_changer.logout
+      /bm create <amount>
+      /bmc <amount>
+      Example: /bm create 100 - Get a 100 dollars book, and pay 100 dollars.
+      Example: /bmc 1000 - Get 10000 dollars book, and pay 10000 dollars.
+  bmu:
+    description: MoneyBook use Command
+    aliases: [bm use,bookmoney use]
     usage: |
-      /command [player]
-      Example: /get_uuid - Get your UUID.
-      Example: /get_uuid ozraru - Get ozraru's UUID.
+      /bm use
+      /bmu
+      You must have MoneyBook in Mainhand
+      Example: /bm use - If you have 100 dollars book in mainhand, you get 100 dollars.
 permissions:
-  ability_changer.*:
-    description: Gives access to all switch user commands
+  book_money.*:
+    description: Gives access to all BookMoney commands
     children:
-      ability_changer.fly: true
-      ability_changer.logout: true
-  ability_changer.fly:
-    description: Allows you fly
-    default: op
-  ability_changer.fly.other:
-    description: Allows you fly other
-    default: op
+      book_money.create: true
+      book_money.use: true
+  book_money.create:
+    description: Allows create MoneyBook
+    default: true
+  book_money.use:
+    description: Allows use MoneyBook
+    default: true
   

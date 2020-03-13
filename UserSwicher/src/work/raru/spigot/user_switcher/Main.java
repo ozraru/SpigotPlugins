@@ -1,6 +1,9 @@
 package work.raru.spigot.user_switcher;
 
-import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -24,6 +27,46 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		logger.info("Disabled");
 	}
+
+
+//	private File Logout(String player, CommandSender sender) {
+//		sender.sendMessage("logout");
+//		PermissionUser User = PermissionsEx.getUser(player);
+//		if (User == null) {
+//			return null;
+//		}
+//		@SuppressWarnings("deprecation")
+//		PermissionGroup[] Groups = User.getGroups();
+//		File BeforeData = null;
+//		for (PermissionGroup permissionGroup : Groups) {
+//			if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
+//				BeforeData  = new File("accountdata/"+permissionGroup.getName()+".dat");
+//				sender.sendMessage(BeforeData.getAbsolutePath());
+//			}
+//		}
+//		if (BeforeData == null) {
+//			sender.sendMessage("Not found before account");
+//			return null;
+//		}
+//		econ.getBalance(Bukkit.getPlayer(player));
+//		for (PermissionGroup permissionGroup : Groups) {
+//			User.removeGroup(permissionGroup);
+//		}
+//		
+//		return BeforeData;
+//	}
+//	
+//	private boolean Login() {
+//		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+//			return false;
+//		}
+//		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+//		if (rsp == null) {
+//			return false;
+//		}
+//		econ = rsp.getProvider();
+//		return econ != null;
+//	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -47,34 +90,38 @@ public class Main extends JavaPlugin {
 				PermissionUser User = PermissionsEx.getUser(args[0]);
 				@SuppressWarnings("deprecation")
 				PermissionGroup[] Groups = User.getGroups();
-				File BeforeData = null;
+				Path BeforeData = null;
 				for (PermissionGroup permissionGroup : Groups) {
 					if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
-						BeforeData = new File("accountdata/"+permissionGroup.getName()+".dat");
-						sender.sendMessage(BeforeData.getAbsolutePath());
+						BeforeData = Paths.get("accountdata/"+permissionGroup.getName()+".dat");
+						sender.sendMessage(BeforeData.toAbsolutePath().toString());
 					}
 					User.removeGroup(permissionGroup);
 				}
 				User.addGroup(LoginGroup);
-				File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
-				File AfterData = new File("accountdata/"+LoginGroup.getName()+".dat");
-				sender.sendMessage(PlayerData.getAbsolutePath());
-				sender.sendMessage(AfterData.getAbsolutePath());
+				Path PlayerData = Paths.get(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
+				Path AfterData = Paths.get("accountdata/"+LoginGroup.getName()+".dat");
+				sender.sendMessage(PlayerData.toAbsolutePath().toString());
+				sender.sendMessage(AfterData.toAbsolutePath().toString());
 				Bukkit.getPlayer(args[0]).kickPlayer("Logging in. Please reconnect.");
 				if (BeforeData == null) {
 					sender.sendMessage("Not found before account");
-					BeforeData = new File("accountdata/Before-bak.dat");
+					BeforeData = Paths.get("accountdata/Before-bak.dat");
 				}
-				if (PlayerData.renameTo(BeforeData)) {
+				try {
+					Files.move(PlayerData,BeforeData);
 					sender.sendMessage("logout sucsess!");
-				} else {
+				} catch (Exception e) {
+					sender.sendMessage(e.getMessage());
 					sender.sendMessage("logout failed!");
 					return false;
 				}
-				if (AfterData.renameTo(PlayerData)) {
+				try {
+					Files.move(AfterData, PlayerData);
 					sender.sendMessage("login sucsess!");
 					return true;
-				} else {
+				} catch (Exception e) {
+					sender.sendMessage(e.getMessage());
 					sender.sendMessage("login failed!");
 					return false;
 				}
@@ -112,11 +159,11 @@ public class Main extends JavaPlugin {
 			}
 			@SuppressWarnings("deprecation")
 			PermissionGroup[] Groups = User.getGroups();
-			File BeforeData = null;
+			Path BeforeData = null;
 			for (PermissionGroup permissionGroup : Groups) {
 				if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
-					BeforeData  = new File("accountdata/"+permissionGroup.getName()+".dat");
-					sender.sendMessage(BeforeData.getAbsolutePath());
+					BeforeData  = Paths.get("accountdata/"+permissionGroup.getName()+".dat");
+					sender.sendMessage(BeforeData.toAbsolutePath().toString());
 				}
 				User.removeGroup(permissionGroup);
 			}
@@ -124,42 +171,20 @@ public class Main extends JavaPlugin {
 				sender.sendMessage("Not found before account");
 				return false;
 			}
-			File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
-			if (PlayerData.renameTo(BeforeData)) {
+			
+			Path PlayerData = Paths.get(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
+			Bukkit.getPlayer(args[0]).kickPlayer("Logging out. Please reconnect.");
+			try {
+				Files.move(PlayerData, BeforeData);
 				sender.sendMessage("logout sucsess!");
-			} else {
+			} catch (Exception e) {
+				sender.sendMessage(e.getMessage());
 				sender.sendMessage("logout failed!");
 				return false;
 			}
-			Bukkit.getPlayer(args[0]).kickPlayer("Logging out. Please reconnect.");
 			return true;
 		}
 		if (command.getName().equalsIgnoreCase("signup")) {
-			sender.sendMessage("logout");
-			PermissionUser User = PermissionsEx.getUser(args[0]);
-			@SuppressWarnings("deprecation")
-			PermissionGroup[] Groups = User.getGroups();
-			File BeforeData = null;
-			for (PermissionGroup permissionGroup : Groups) {
-				if (permissionGroup.getOption("Account") != null && permissionGroup.getOption("Account").equals("true")) {
-					BeforeData  = new File("accountdata/"+permissionGroup.getName()+".dat");
-					sender.sendMessage(BeforeData.getAbsolutePath());
-				}
-				User.removeGroup(permissionGroup);
-			}
-			if (BeforeData == null) {
-				sender.sendMessage("Not found before account");
-				return false;
-			}
-			File PlayerData = new File(Bukkit.getWorlds().get(0).getName()+"/playerdata/"+Bukkit.getPlayer(args[0]).getUniqueId()+".dat");
-			if (PlayerData.renameTo(BeforeData)) {
-				sender.sendMessage("logout sucsess!");
-			} else {
-				sender.sendMessage("logout failed!");
-				return false;
-			}
-			Bukkit.getPlayer(args[0]).kickPlayer("Logging out. Please reconnect.");
-			return true;
 		}
 		return false;
 	}

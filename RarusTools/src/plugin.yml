@@ -1,0 +1,64 @@
+name: Rarus Tools
+main: work.raru.spigot.rarustools.Rarustools
+version: 0.1
+author: ozraru
+description: Provides some useful tools.
+depend: [Vault]
+commands:
+  rarustools inventory:
+    aliases: [rt inventory,rt inv,rt i,rarustools inv,rarustools i]
+    usage: |
+      /rt inventory <Type> [source player name] [target name]
+      You need "Portable Crafting Table", "Portable Ender Chest" or permission.
+      Type(Ignore case):
+      crafting_table,craftingtable,craft_table,crafttable,crafting,craft,ct,workbench,work,wb : 3x3 Craft
+      ender_chest,enderchest,ender,end,ec : Ender Chest
+      inventory,inv : Target's inventory
+      Example: /rt i e raru_sub -
+  rarustools:
+    description: Rarus Tools Command
+    aliases: [rt, rarus_tools]
+    usage: |
+      /rt i ?
+      Example: /rt i inv raru_sub ozraru - ozraru opens reru_sub's inventory.
+permissions:
+  rarustools.*:
+    description: Gives access to all BookMoney commands
+    children:
+      rarustools.inventory.crafttable.*: true
+      rarustools.inventory.enderchest.*: true
+      rarustools.inventory.other: true
+  rarustools.inventory.crafttable.*:
+    description: Allows open crafting table for anyone in any case.
+    children:
+      rarustools.inventory.crafttable: true
+      rarustools.inventory.crafttable.other: true
+      rarustools.inventory.crafttable.bypass: true
+  rarustools.inventory.crafttable:
+    description: Allows open crafting table, if you have portable crafting table.
+    default: true
+  rarustools.inventory.crafttable.other:
+    description: Allows open crafting table for anyone, Even if they don't have a portable crafting table.
+    default: op
+  rarustools.inventory.crafttable.bypass:
+    description: Allows open crafting table, even if you don't have a portable crafting table.
+    default: op
+  rarustools.inventory.enderchest.*:
+    description: Allows open any EnderChest for anyone in any case.
+    children:
+      rarustools.inventory.enderchest.own: true
+      rarustools.inventory.enderchest.bypass: true
+      rarustools.inventory.enderchest.other: true
+  rarustools.inventory.enderchest.own:
+    description: Allows open your EnderChest, if you have portable EnderChest.
+    default: true
+  rarustools.inventory.enderchest.bypass:
+    description: Allows open your EnderChest, even if you don't have a portable EnderChest.
+    default: op
+  rarustools.inventory.enderchest.other:
+    description: Allows open any EnderChest for anyone, Even if they don't have a portable crafting table.
+    default: op
+  rarustools.inventory.inventory.other:
+    description: Allows open anyone's inventory.
+    default: op
+  

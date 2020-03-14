@@ -1,0 +1,44 @@
+name: EmeraldConverter
+main: work.raru.spigot.emeraldconverter.EmeraldConverter
+version: 0.1
+author: ozraru
+description: Convert bitween emerald and dollars.
+depend: [Vault]
+commands:
+  emeraldconverter:
+    description: EmeraldConverter Command
+    aliases: [ec]
+    usage: |
+      /ec withdraw <amount of Emeralds>
+      /ecw <amount of Emeralds>
+      Check /help ecw
+      /ec deposit <amount of Emeralds>
+      /ecd <amount of Emeralds>
+      Check /help ecd
+  emeraldconverterwithdraw:
+    description: MoneyBook create Command
+    aliases: [ecw, ec withdraw, ec w]
+    usage: |
+      /ec withdraw <amount of Emeralds>
+      /ecw <amount of Emeralds>
+      Example: /ec withdraw 100 - Get a 100 emerald, and pay 100 dollars.(default)
+  emeraldconverterdeposit:
+    description: MoneyBook use Command
+    aliases: [ecd, ec deposit, ec d]
+    usage: |
+      /ec deposit <amount of Emeralds>
+      /ecd <amount of Emeralds>
+      Example: /ec deposit 100 - Get a 100 dollars, and pay 100 emeralds.(default)
+permissions:
+  emeraldconverter.*:
+    description: Gives access to all EmeraldConverter commands
+    children:
+      book_money.create: true
+      book_money.use: true
+  emeraldconverter.withdraw:
+    description: Allows withdraw emerald
+    default: true
+  emeraldconverter.deposit:
+    description: Allows deposit emerald
+    default: true
+  

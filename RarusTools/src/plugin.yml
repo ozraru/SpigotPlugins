@@ -27,13 +27,11 @@ permissions:
     children:
       rarustools.inventorys.crafttable.*: true
       rarustools.inventorys.enderchest.*: true
-      rarustools.inventorys.other: true
+      rarustools.inventorys.inventory.other: true
   rarustools.inventorys.crafttable.*:
     description: Allows open crafting table for anyone in any case.
     children:
-      rarustools.inventorys.crafttable: true
       rarustools.inventorys.crafttable.other: true
-      rarustools.inventorys.crafttable.bypass: true
   rarustools.inventorys.crafttable:
     description: Allows open crafting table, if you have portable crafting table.
     default: true
@@ -41,17 +39,15 @@ permissions:
     description: Allows open crafting table for anyone, Even if they don't have a portable crafting table.
     default: op
     children:
-      rarustools.rarustools.inventorys.crafttable.bypass
+      rarustools.inventorys.crafttable.bypass: true
   rarustools.inventorys.crafttable.bypass:
     description: Allows open crafting table, even if you don't have a portable crafting table.
     default: op
     children:
-      rarustools.rarustools.inventorys.crafttable
+      rarustools.inventorys.crafttable: true
   rarustools.inventorys.enderchest.*:
     description: Allows open any EnderChest for anyone in any case.
     children:
-      rarustools.inventorys.enderchest: true
-      rarustools.inventorys.enderchest.bypass: true
       rarustools.inventorys.enderchest.other: true
   rarustools.inventorys.enderchest:
     description: Allows open your EnderChest, if you have portable EnderChest.
@@ -59,9 +55,13 @@ permissions:
   rarustools.inventorys.enderchest.bypass:
     description: Allows open your EnderChest, even if you don't have a portable EnderChest.
     default: op
+    children:
+      rarustools.inventorys.enderchest: true
   rarustools.inventorys.enderchest.other:
     description: Allows open any EnderChest for anyone, Even if they don't have a portable crafting table.
     default: op
+    children:
+      rarustools.inventorys.enderchest.bypass: true
   rarustools.inventorys.inventory.other:
     description: Allows open anyone's inventory.
     default: op

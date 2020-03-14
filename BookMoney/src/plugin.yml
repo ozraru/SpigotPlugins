@@ -1,6 +1,6 @@
 name: BookMoney
 main: work.raru.spigot.book_money.Main
-version: 0.1
+version: 0.2
 author: ozraru
 description: Convert bitween book and dollars.
 depend: [Vault]
@@ -11,12 +11,10 @@ commands:
     usage: |
       /bm create <amount>
       /bmc <amount>
-      Example: /bm create 100 - Get a 100 dollars book, and pay 100 dollars.
-      Example: /bmc 1000 - Get 10000 dollars book, and pay 10000 dollars.
+      Check /help bmc
       /bm use
       /bmu
-      You must have MoneyBook in Mainhand
-      Example: /bm use - If you have 100 dollars book in mainhand, you get 100 dollars.
+      Check /help bmu
   bmc:
     description: MoneyBook create Command
     aliases: [bm create,bookmoney create]

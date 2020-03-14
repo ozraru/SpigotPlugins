@@ -1,5 +1,7 @@
 package work.raru.spigot.book_money;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.Material;
@@ -12,6 +14,9 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -53,9 +58,24 @@ public class Main extends JavaPlugin {
 		book.setAuthor("Lemonation");
 		book.setUnbreakable(true);
 		book.setGeneration(BookMeta.Generation.COPY_OF_COPY);
-		book.addPage("1ページ目：目次\n2ページ目：金額\n3ページ目：その他");
-		book.addPage(String.valueOf(amount));
-		book.addPage("Created by "+player.getName());
+		List<BaseComponent[]> pages = new ArrayList<>();
+		BaseComponent Button = new TextComponent("この本を使って受け取る!\n(ここをクリックすると\n/bmuが実行されます)\n");
+		Button.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/bmu"));
+		Button.setColor(net.md_5.bungee.api.ChatColor.RED);
+		Button.setUnderlined(true);
+		Button.setBold(true);
+		BaseComponent[] page1 = new BaseComponent[3];
+		page1[0] = new TextComponent("金額: "+amount+"\n");
+		page1[1] = Button;
+		page1[2] = new TextComponent("\n1ページ目：目次\n2ページ目：金額(処理用)\n3ページ目：その他");
+		pages.add(page1);
+		BaseComponent[] page2 = new BaseComponent[1];
+		page2[0] = new TextComponent(String.valueOf(amount));
+		pages.add(page2);
+		BaseComponent[] page3 = new BaseComponent[1];
+		page3[0] = new TextComponent("Created by "+player.getName());
+		pages.add(page3);
+		book.spigot().setPages(pages);
 		books.setItemMeta(book);
 		EconomyResponse econRes = econ.withdrawPlayer(player, amount);
 		if (econRes.transactionSuccess()) {

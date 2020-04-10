@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/Vault.jar</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/Files/libs/Vault.jar</locationURI>
+		</link>
+		<link>
+			<name>lib/spigot-1.12.2.jar</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/Files/libs/spigot-1.12.2.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

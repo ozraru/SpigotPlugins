@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/spigot-1.12.2.jar"/>
 	<classpathentry kind="lib" path="lib/Vault.jar"/>
-	<classpathentry kind="lib" path="lib/PermissionsEx-1.23.4.jar"/>
+	<classpathentry kind="lib" path="lib/LuckPerms-Bukkit-5.0.94.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

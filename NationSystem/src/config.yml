@@ -1,0 +1,36 @@
+SecondsPerTimeAmount: 86400
+ChangeWorldBorderDuration: 300
+giveSecond: 180
+debug: false
+
+Worlds:
+  CentralCountry:
+    kingGroupName: central_king
+    HoldingCosts:
+      BorderMultiplier: 2
+      TimeUnitMultiplier: 1.1
+    BorderCosts:
+      AlreadyBorderMultiplier: 20
+      ChangeBorderMultiplier:
+        Positive: 50
+        Negative: 10
+  SecondCountry:
+    kingGroupName: second_king
+    HoldingCosts:
+      BorderMultiplier: 5
+      TimeUnitMultiplier: 1.1
+    BorderCosts:
+      AlreadyBorderMultiplier: 20
+      ChangeBorderMultiplier:
+        Positive: 50
+        Negative: 10
+  ThirdCountry:
+    kingGroupName: third_king
+    HoldingCosts:
+      BorderMultiplier: 10
+      TimeUnitMultiplier: 1.05
+    BorderCosts:
+      AlreadyBorderMultiplier: 50
+      ChangeBorderMultiplier:
+        Positive: 200
+        Negative: 100

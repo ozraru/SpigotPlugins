@@ -1,0 +1,73 @@
+name: NationSystem
+main: work.raru.spigot.nationsystem.NationSystem
+version: 0.1
+author: ozraru
+description: Provides nation system.
+depend: [Vault, LuckPerms]
+commands:
+  ns pay:
+    aliases: [nationsystem pay, nation_system pay]
+    usage: |
+      Pay holding costs.
+      You can also change WorldBorder at the same time.
+      /ns pay <TimeUnit> [newBorder] [World]
+      TimeUnit: Amount of TimeUnit(Default is 86400 seconds per TimeUnit).
+      newBorder: new WorldBorder size. If you use 0, It isn't change.
+      World: If you don't type, world where you are.
+      Example: /ns pay 5 150 CentralCountry - Pay 5 TimeAmount Cost and change WorldBorder size to 150 in Central Country
+  ns paydry:
+    aliases: [nationsystem paydry, nation_system paydry]
+    usage: |
+      You can see the expected results.
+      /ns pay <TimeUnit> [newBorder] [World]
+      TimeUnit: Amount of TimeUnit(Default is 86400 seconds per TimeUnit).
+      newBorder: new WorldBorder size. If you use 0, It isn't change.
+      World: If you don't type, world where you are.
+      Example: /ns pay 5 150 CentralCountry - Pay 5 TimeAmount Cost and change WorldBorder size to 150 in Central Country
+  ns take:
+    aliases: [nationsystem take, nation_system take]
+    usage: |
+      Pay Money and become King using any DragonEggs.
+      /ns take <TimeUnit> <useEgg> [newBorder] [World]
+      TimeUnit: Amount of TimeUnit(Default is 86400 seconds per TimeUnit).
+      useEgg: Must be more than shield
+      newBorder: new WorldBorder size. If you use 0, It isn't change.
+      World: If you don't type, world where you are.
+      Example: /ns take 5 3 0 CentralCountry - Pay 5 TimeAmount cost and become King using 3 DragonEggs.
+  ns takedry:
+    aliases: [nationsystem takedry, nation_system takedry]
+    usage: |
+      You can see the expected results.
+      /ns take <TimeUnit> <useEgg> [newBorder] [World]
+      TimeUnit: Amount of TimeUnit(Default is 86400 seconds per TimeUnit).
+      useEgg: Must be more than shield
+      newBorder: new WorldBorder size. If you use 0, It isn't change.
+      World: If you don't type, world where you are.
+      Example: /ns take 5 3 0 CentralCountry - Pay 5 TimeAmount cost and become King using 3 DragonEggs.
+  ns give:
+    aliases: [nationsystem give, nation_system takedry]
+    usage: |
+      You can see the expected results.
+      /ns take <TimeUnit> <useEgg> [newBorder] [World]
+      TimeUnit: Amount of TimeUnit(Default is 86400 seconds per TimeUnit).
+      useEgg: Must be more than shield
+      newBorder: new WorldBorder size. If you use 0, It isn't change.
+      World: If you don't type, world where you are.
+      Example: /ns take 5 3 0 CentralCountry - Pay 5 TimeAmount cost and become King using 3 DragonEggs.
+  nationsystem:
+    description: Nation System Command
+    aliases: [ns, nation_system]
+    usage: |
+      /ns pay <TimeUnit> [newBorder] [World] - For more information, run /help ns pay
+      /ns take
+      /ns give
+      /ns get
+permissions:
+  nationsystem.*:
+    description: Gives access to all NationSystem commands
+    children:
+      nationsystem.pay.*: true
+      nationsystem.take.*: true
+      nationsystem.give.*: true
+      nationsystem.get.*: true
+    default: op

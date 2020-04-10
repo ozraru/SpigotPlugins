@@ -1,0 +1,22 @@
+name: RankManager
+main: work.raru.spigot.rankmanager.Main
+version: 0.1
+author: ozraru
+description: Link Minecraft-Discord.
+depend: [Vault]
+commands:
+  discordlink:
+    description: Rarus Tools Command
+    aliases: [dl, discord_link]
+    usage: |
+      /dl
+      Example: /dl - ozraru opens reru_sub's inventory.
+permissions:
+  discordlink.*:
+    description: Gives access to all DiscordLink commands
+    children:
+      discordlink.a: true
+  rdiscordlink.a:
+    description: Allows open crafting table, if you have portable crafting table.
+    default: true
+  

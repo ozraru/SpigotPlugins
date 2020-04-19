@@ -1,2 +1,22 @@
+DatabaseName: Database.db
+Worlds:
+  CentralCountry:
+    TrackName: central
+  SecondCountry:
+    TrackName: second
 Discord:
-  Token: "Njk3ODM1MTU4NDI2MDkxNzAw.Xo9pMg.vO8hqV9IuiU7dRQ9swcaXISntYA"
+  BotLoginToken: "your_bot_token_here"
+  GuildID: 667665415928807454
+  TokenExpirationSeconds: 300
+  ChannelID:
+    bot_channel: 697886153491218532 #channel id here
+    MinecraftLink: 697886153491218532
+  RoleID:
+    Special:
+      linked: 700600969506979860
+    Group:
+      central_king: 667671368426455050
+      central_officials: 667671717002608650
+      central_citizen: 667672347527872533
+      central_visitor: 700458852021436417
+      central_unconfirmed: 700458957872955452

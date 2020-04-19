@@ -5,18 +5,33 @@ author: ozraru
 description: Link Minecraft-Discord.
 depend: [Vault]
 commands:
-  discordlink:
-    description: Rarus Tools Command
-    aliases: [dl, discord_link]
+  rankmanager:
+    description: RankManager Command
+    aliases: [rm, rank_manager]
     usage: |
-      /dl
-      Example: /dl - ozraru opens reru_sub's inventory.
+      /rm
+      Example: /rm - Error!
+  promote:
+    description: Promote user
+    aliases: [rmp]
+    usage: |
+      /promote <playerName/UUID> [World]
+  demote:
+    description: Demote user
+    aliases: [rmp]
+    usage: |
+      /demote <playerName/UUID> [World]
+  link:
+    description: Generate token for Link to discord
+    aliases: [discord]
+    usage: |
+      /link [MCID]
 permissions:
-  discordlink.*:
-    description: Gives access to all DiscordLink commands
+  rankmanager.*:
+    description: Gives access to all RankManager commands
     children:
       discordlink.a: true
-  rdiscordlink.a:
+  rankmanager.a:
     description: Allows open crafting table, if you have portable crafting table.
     default: true
   
